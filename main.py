@@ -22,7 +22,7 @@ def studentOrProfessor():
     elif answer == 3:
         seeTheCourses()
     else:
-        print('Please input a valid name!')
+        print('Please choose a valid number from the main menu!')
         studentOrProfessor()
 
 # check the student's number
