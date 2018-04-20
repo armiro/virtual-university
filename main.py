@@ -1,33 +1,31 @@
-from student import *
-from professor import *
-from course import *
+from classes import Student
+from classes import Course
+from classes import Professor
 
-
-def listOfCourses():
-    print('Which course you wanna attend to?')
-    for k in Course.numReg:
-        print('%d) %s' % (k.number, k.name))
-
+# display the welcome text
 def welcomeText():
     print('Welcome to the virtual university!')
     studentOrProfessor()
 
+# the main menu
 def studentOrProfessor():
-    print('student or professor or courses?')
-    global answer
-    answer = input()
-    if answer == 'student':
+    print('1) student   2) professor    3) see the courses')
+    try:
+        answer = int(input())
+    except:
+        print('Please choose a valid number from the main menu!')
+        studentOrProfessor()
+    if answer == 1:
         studentNumber()
-    elif answer == 'professor':
+    elif answer == 2:
         professorID()
-    elif answer == 'courses':
-        Course.displayCourse(0)
-        courseAuth()
+    elif answer == 3:
+        seeTheCourses()
     else:
         print('Please input a valid name!')
         studentOrProfessor()
 
-
+# check the student's number
 def studentNumber():
     print('Your student number?')
     global numStudent
@@ -38,59 +36,46 @@ def studentNumber():
         print('please write a valid student number!')
         studentNumber()
 
-
+# the students number is valid, now display student name & family
 def studentAuth():
-    counter = 0
     for i in Student.numReg:
         if i.number == numStudent:
             Student.displayStudent(i)
-            counter += 1
-    if counter == 0:
-        print('You are not registered!')
-        studentNumber()
     studentMenu()
 
-
+# student logged in, now see the menu: see/get courses or log out
 def studentMenu():
     print('1) See your courses   2) Get a new course    3) Log out')
-    global userOption
     userOption = int(input())
     if userOption == 1:
-        seeCourses()
+        seeStudentCourses()
     elif userOption == 2:
         getNewCourse()
     elif userOption == 3:
         studentOrProfessor()
     else:
-        print('please choose a valid option')
+        print('Please choose a valid option from the student menu')
         studentMenu()
 
-
-def seeCourses():
-    global i
-    for i in Student.numReg:
-        if i.number == numStudent:
-            Student.displayStudentCourses(i)
+# the student can see the courses he has
+def seeStudentCourses():
+    Student.displayStudentCourses(0, numStudent)
     studentMenu()
 
+# the student can choose a new course to attend
 def getNewCourse():
-    listOfCourses()
+    print('Which course you wanna attend to?')
+    Course.displayCourses(0)
     selectedCourseNumber = int(input())
     if 1 <= selectedCourseNumber <= 8:
-        wantedCourse = courseList[selectedCourseNumber]
-        for i in Student.numReg:
-            if i.number == numStudent:
-                Student.studentCourseAdding(i, wantedCourse)
-                for k in Course.numReg:
-                    if wantedCourse == k.name:
-                        nameAndFamily = i.name + ' ' + i.family
-                        k.studentInCourse.append(nameAndFamily)
+        Student.studentCourseAdding(0, selectedCourseNumber, numStudent)
+        Course.newStudentGotACourse(0, numStudent, selectedCourseNumber)
         studentMenu()
     else:
         print('Please choose a valid number!')
         getNewCourse()
 
-
+# check the professor's ID
 def professorID():
     print('Your ID?')
     global numProfessor
@@ -101,15 +86,12 @@ def professorID():
         print('Please type a valid professor ID!')
         professorID()
 
+# the professor ID is valid, now display his family
 def professorAuth():
-    global j
-    for j in Professor.numReg:
-        if j.number == numProfessor:
-            Professor.displayProfessor(j)
-            global courseDict
-            courseDict = j.profCourses
+    Professor.displayProfessor(0, numProfessor)
     professorMenu()
 
+# the professor logged in, now see the menu: see attending students, give a new courses or log out
 def professorMenu():
     print('1) See attending students    2) Give a new course!   3) Log out')
     professorOption = int(input())
@@ -121,91 +103,72 @@ def professorMenu():
                     professorMenu()
                 else:
                     whichCourseToSee()
+
     elif professorOption == 2:
         profGiveNewCourse()
-
     elif professorOption == 3:
         studentOrProfessor()
-
     else:
         print('please choose a valid option')
         professorMenu()
 
-
+# the professor has instructed some courses, see which one to display the attending students
 def whichCourseToSee():
     print('Which course to see the attending students?')
     for j in Professor.numReg:
         if j.number == numProfessor:
             for l in range(0, len(j.profCourses)):
                 print('%d. %s' % (l + 1, j.profCourses[l]))
+
             courseSelectionToSeeStudents = int(input())
+
             if 1 <= courseSelectionToSeeStudents <= len(j.profCourses):
                 studentCount = 1
-                courseName = j.profCourses[courseSelectionToSeeStudents-1]
+                courseName = j.profCourses[courseSelectionToSeeStudents - 1]
                 for i in Student.numReg:
                     for z in range(0, len(i.courses)):
                         if i.courses[z] == courseName:
                             print('%d. ' % studentCount + i.name + ' ' + i.family)
-                        studentCount += 1
-                    else:
-                        pass
+                            studentCount += 1
+                        else:
+                            pass
+
                 if studentCount == 1:
                     print('It seems that nobody has chosen this course yet!')
-            professorMenu()
+
+                professorMenu()
 
             else:
-                print('Please select a valid course number!')
-                print(courseSelectionToSeeStudents)
-                print(len(j.profCourses))
+                print('Please choose a valid course number!')
                 whichCourseToSee()
 
-
-
-
-        # global studentCount
-        # studentCount = 1
-        # courseName = courseDict[professorOption]
-        # for i in Student.numReg:
-        #     for z in range(0, len(i.courses)):
-        #         if i.courses[z] == courseName:
-        #             print('%d. ' % studentCount + i.name + ' ' + i.family)
-        #             studentCount += 1
-        #         else:
-        #             pass
-        # if studentCount == 1:
-        #     print('It seems that nobody has chosen this course yet!')
-        # professorMenu()
-
-
+# the professor wants to give a new course!
 def profGiveNewCourse():
     print('Which course you wanna give?')
-    for k in Course.numReg:
-        print('%d) %s' % (k.number, k.name))
+    Course.displayCourses(0)
     newCourseOption = int(input())
+    if 1<= newCourseOption <= 8:
+        Professor.professorCourseGiving(0, newCourseOption, numProfessor)
+        professorMenu()
+    else:
+        print('Please choose a valid course number!')
+        profGiveNewCourse()
 
-
-
-def courseAuth():
+# the user selected to see the course details (option 3 in main menu)
+def seeTheCourses():
+    print('Which course to see the details of?')
+    Course.displayCourses(0)
     courseNumber = int(input())
     if 1 <= courseNumber <= 8:
-        for k in Course.numReg:
-            if k.number == courseNumber:
-                print('Name of course is: ' + k.name)
-                print('Instructor is: ' + k.profOfCourse)
-                if len(k.studentInCourse) > 0:
-                    print('Attending students are: ' + str([k.studentInCourse[q] for q in range(0, len(k.studentInCourse))]))
-                else:
-                    print('No students attend here!')
+        Course.displayCourseDetails(0, courseNumber)
         studentOrProfessor()
     else:
         print('please type a valid course number!')
-        courseAuth()
+        seeTheCourses()
 
-
+# the main function
 def main():
-
     welcomeText()
-
 
 if __name__ == '__main__':
     main()
