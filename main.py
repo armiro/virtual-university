@@ -2,8 +2,8 @@ from classes import Student
 from classes import Course
 from classes import Professor
 
-# display the welcome text
-def welcomeText():
+# the main function
+def main():
     print('Welcome to the virtual university!')
     studentOrProfessor()
 
@@ -43,7 +43,7 @@ def studentAuth():
             Student.displayStudent(i)
     studentMenu()
 
-# student logged in, now see the menu: see/get courses or log out
+# student logged in, now see the menu: see/get courses or logout
 def studentMenu():
     print('1) See your courses   2) Get a new course    3) Log out')
     userOption = int(input())
@@ -91,7 +91,7 @@ def professorAuth():
     Professor.displayProfessor(0, numProfessor)
     professorMenu()
 
-# the professor logged in, now see the menu: see attending students, give a new courses or log out
+# the professor logged in, now menu: see attending students, give a new course or logout
 def professorMenu():
     print('1) See attending students    2) Give a new course!   3) Log out')
     professorOption = int(input())
@@ -103,7 +103,6 @@ def professorMenu():
                     professorMenu()
                 else:
                     whichCourseToSee()
-
     elif professorOption == 2:
         profGiveNewCourse()
     elif professorOption == 3:
@@ -112,7 +111,7 @@ def professorMenu():
         print('please choose a valid option')
         professorMenu()
 
-# the professor has instructed some courses, see which one to display the attending students
+# the professor has instructed some courses, which one to see the attending students
 def whichCourseToSee():
     print('Which course to see the attending students?')
     for j in Professor.numReg:
@@ -165,10 +164,6 @@ def seeTheCourses():
     else:
         print('please type a valid course number!')
         seeTheCourses()
-
-# the main function
-def main():
-    welcomeText()
 
 if __name__ == '__main__':
     main()

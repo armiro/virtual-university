@@ -63,11 +63,17 @@ class Professor:
     def professorCourseGiving(self, newCourseOption, numProfessor):
         for k in Course.numReg:
             if k.number == newCourseOption:
-                for j in Professor.numReg:
-                    if j.number == numProfessor:
-                        j.profCourses.append(k.name)
-                        k.profOfCourse = j.family
-        print('You are now the instructor of %s!' % courseList[newCourseOption])
+                courseProf = k.profOfCourse
+        if courseProf:
+            print('Sorry Sir! Another professor has instructed this course, before!')
+        else:
+            for k in Course.numReg:
+                if k.number == newCourseOption:
+                    for j in Professor.numReg:
+                        if j.number == numProfessor:
+                            j.profCourses.append(k.name)
+                            k.profOfCourse = j.family
+            print('You are now the instructor of %s!' % courseList[newCourseOption])
 
 class Student:
     """Common base class for all students"""
