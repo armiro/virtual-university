@@ -129,7 +129,7 @@ history = Course(5, 'history')
 literature = Course(6, 'literature')
 chemistry = Course(7, 'chemistry')
 statistics = Course(8, 'statistics')
-logic = Course(9, 'logic')
+logic_circuits = Course(9, 'logic circuits')
 
 courseList = [k.name for k in Course.numReg]
 

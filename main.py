@@ -1,6 +1,3 @@
-from classes import Student
-from classes import Course
-from classes import Professor
 from classes import *
 
 # the main function
