@@ -60,7 +60,8 @@ def studentMenu():
 
 # the student can see the courses he has
 def seeStudentCourses():
-    Student.displayStudentCourses(numStudent)
+    for i in Student.numReg:
+        Student.displayStudentCourses(i, numStudent)
     studentMenu()
 
 # the student can choose a new course to attend
@@ -69,8 +70,11 @@ def getNewCourse():
     Course.displayCourses()
     selectedCourseNumber = int(input())
     if selectedCourseNumber in range(1, len(Course.numReg)+1):
-        Student.studentCourseAdding(selectedCourseNumber, numStudent)
-        Course.newStudentGotACourse(numStudent, selectedCourseNumber)
+        wantedCourse = courseList[selectedCourseNumber - 1]
+        for i in Student.numReg:
+            Student.studentCourseAdding(i, wantedCourse, numStudent)
+        for k in Course.numReg:
+            Course.newStudentGotACourse(k, numStudent, selectedCourseNumber)
         studentMenu()
     else:
         print('Please choose a valid number!')
@@ -89,7 +93,8 @@ def professorID():
 
 # the professor ID is valid, now display his family
 def professorAuth():
-    Professor.displayProfessor(numProfessor)
+    for j in Professor.numReg:
+        Professor.displayProfessor(j, numProfessor)
     professorMenu()
 
 # the professor logged in, now menu: see attending students, give a new course or logout
@@ -160,7 +165,8 @@ def seeTheCourses():
     Course.displayCourses()
     courseNumber = int(input())
     if courseNumber in range(1, len(Course.numReg)+1):
-        Course.displayCourseDetails(courseNumber)
+        for k in Course.numReg:
+            Course.displayCourseDetails(k, courseNumber)
         studentOrProfessor()
     else:
         print('please type a valid course number!')

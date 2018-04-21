@@ -1,7 +1,3 @@
-# courseList = {1: 'math', 2: 'data analyzing', 3: 'physics', 4: 'dynamic',
-#               5: 'history', 6: 'literature', 7: 'chemistry', 8: 'statistics'}
-
-
 
 class Course:
     """common base class for all courses"""
@@ -21,30 +17,26 @@ class Course:
         for k in Course.numReg:
             print('%d) %s' % (k.number, k.name))
 
-    @staticmethod
-    def displayCourseDetails(courseNumber):
-        for k in Course.numReg:
-            if k.number == courseNumber:
-                print('Name of course is: ' + k.name)
-                if k.profOfCourse:
-                    print('Instructor is: Dr. ' + k.profOfCourse)
-                else:
-                    print('No professor has chosen this course to teach!')
+    def displayCourseDetails(self, courseNumber):
+        if self.number == courseNumber:
+            print('Name of course is: ' + self.name)
+            if self.profOfCourse:
+                print('Instructor is: Dr. ' + self.profOfCourse)
+            else:
+                print('No professor has chosen this course to teach!')
 
-                if len(k.studentInCourse) > 0:
-                    print('Attending student(s) are: ' + str([k.studentInCourse[q] for q in range(0, len(k.studentInCourse))]))
-                else:
-                    print('No students attend here!')
+            if len(self.studentInCourse) > 0:
+                print('Attending student(s) are: ' + str([self.studentInCourse[q] for q in range(0, len(self.studentInCourse))]))
+            else:
+                print('No students attend here!')
 
-    @staticmethod
-    def newStudentGotACourse(numStudent, selectedCourseNumber):
+    def newStudentGotACourse(self, numStudent, selectedCourseNumber):
         wantedCourse = courseList[selectedCourseNumber-1]
-        for k in Course.numReg:
-            if wantedCourse == k.name:
-                for i in Student.numReg:
-                    if numStudent == i.number:
-                        nameAndFamily = i.name + ' ' + i.family
-                        k.studentInCourse.append(nameAndFamily)
+        if wantedCourse == self.name:
+            for i in Student.numReg:
+                if numStudent == i.number:
+                    nameAndFamily = i.name + ' ' + i.family
+                    self.studentInCourse.append(nameAndFamily)
 
 class Professor:
     """common base class for all professors"""
@@ -58,13 +50,11 @@ class Professor:
         self.family = family
         self.profCourses = profCourses
 
-    @staticmethod
-    def displayProfessor(numProfessor):
-        for j in Professor.numReg:
-            if j.number == numProfessor:
-                print('Welcome Dear Dr.' + j.family)
-                print('You are the instructor of %d course(s) ' % len(j.profCourses))
-                # courseDict = j.profCourses
+    def displayProfessor(self, numProfessor):
+        # for j in Professor.numReg:
+            if self.number == numProfessor:
+                print('Welcome Dear Dr.' + self.family)
+                print('You are the instructor of %d course(s) ' % len(self.profCourses))
 
     @staticmethod
     def professorCourseGiving(newCourseOption, numProfessor):
@@ -98,22 +88,17 @@ class Student:
     def displayStudent(self):
         print('You are logged in as ' + self.name + ' ' + self.family)
 
-    @staticmethod
-    def displayStudentCourses(numStudent):
-        for i in Student.numReg:
-            if i.number == numStudent:
-                if i.courses:
-                    print(i.courses)
-                else:
-                    print('You have no courses, yet!')
+    def displayStudentCourses(self, numStudent):
+        if self.number == numStudent:
+            if self.courses:
+                print(self.courses)
+            else:
+                print('You have no courses, yet!')
 
-    @staticmethod
-    def studentCourseAdding(selectedCourseNumber, numStudent):
-        wantedCourse = courseList[selectedCourseNumber-1]
-        for i in Student.numReg:
-            if i.number == numStudent:
-                i.courses.append(wantedCourse)
-                print('You Added ' + wantedCourse + ' to your schedule, successfully!')
+    def studentCourseAdding(self, wantedCourse, numStudent):
+        if self.number == numStudent:
+            self.courses.append(wantedCourse)
+            print('You Added ' + wantedCourse + ' to your schedule, successfully!')
 
 
 professor1 = Professor(1, 'X')
