@@ -1,9 +1,9 @@
-from classes import *
+from objects import *
+courseList = [k.name for k in Course.numReg]
 
 # the main function
 def main():
     print('Welcome to the virtual university!')
-    # print(courseList)
     studentOrProfessor()
 
 # the main menu
@@ -67,14 +67,15 @@ def seeStudentCourses():
 # the student can choose a new course to attend
 def getNewCourse():
     print('Which course you wanna attend to?')
-    Course.displayCourses()
+    for k in Course.numReg:
+        Course.displayCourses(k)
     selectedCourseNumber = int(input())
     if selectedCourseNumber in range(1, len(Course.numReg)+1):
         wantedCourse = courseList[selectedCourseNumber - 1]
         for i in Student.numReg:
             Student.studentCourseAdding(i, wantedCourse, numStudent)
         for k in Course.numReg:
-            Course.newStudentGotACourse(k, numStudent, selectedCourseNumber)
+            Course.newStudentGotACourse(k, numStudent, wantedCourse)
         studentMenu()
     else:
         print('Please choose a valid number!')
@@ -150,7 +151,8 @@ def whichCourseToSee():
 # the professor wants to give a new course!
 def profGiveNewCourse():
     print('Which course you wanna give?')
-    Course.displayCourses()
+    for k in Course.numReg:
+        Course.displayCourses(k)
     newCourseOption = int(input())
     if newCourseOption in range(1, len(Course.numReg)+1):
         Professor.professorCourseGiving(newCourseOption, numProfessor)
@@ -162,7 +164,8 @@ def profGiveNewCourse():
 # the user selected to see the course details (option 3 in main menu)
 def seeTheCourses():
     print('Which course to see the details of?')
-    Course.displayCourses()
+    for k in Course.numReg:
+        Course.displayCourses(k)
     courseNumber = int(input())
     if courseNumber in range(1, len(Course.numReg)+1):
         for k in Course.numReg:
