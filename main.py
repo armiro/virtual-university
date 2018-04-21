@@ -10,6 +10,7 @@ def main():
 # the main menu
 def studentOrProfessor():
     print('1) student   2) professor    3) see the courses')
+    # noinspection PyBroadException
     try:
         answer = int(input())
     except:
@@ -59,17 +60,17 @@ def studentMenu():
 
 # the student can see the courses he has
 def seeStudentCourses():
-    Student.displayStudentCourses(0, numStudent)
+    Student.displayStudentCourses(numStudent)
     studentMenu()
 
 # the student can choose a new course to attend
 def getNewCourse():
     print('Which course you wanna attend to?')
-    Course.displayCourses(0)
+    Course.displayCourses()
     selectedCourseNumber = int(input())
     if 1 <= selectedCourseNumber <= 8:
-        Student.studentCourseAdding(0, selectedCourseNumber, numStudent)
-        Course.newStudentGotACourse(0, numStudent, selectedCourseNumber)
+        Student.studentCourseAdding(selectedCourseNumber, numStudent)
+        Course.newStudentGotACourse(numStudent, selectedCourseNumber)
         studentMenu()
     else:
         print('Please choose a valid number!')
@@ -88,7 +89,7 @@ def professorID():
 
 # the professor ID is valid, now display his family
 def professorAuth():
-    Professor.displayProfessor(0, numProfessor)
+    Professor.displayProfessor(numProfessor)
     professorMenu()
 
 # the professor logged in, now menu: see attending students, give a new course or logout
@@ -144,10 +145,10 @@ def whichCourseToSee():
 # the professor wants to give a new course!
 def profGiveNewCourse():
     print('Which course you wanna give?')
-    Course.displayCourses(0)
+    Course.displayCourses()
     newCourseOption = int(input())
     if 1<= newCourseOption <= 8:
-        Professor.professorCourseGiving(0, newCourseOption, numProfessor)
+        Professor.professorCourseGiving(newCourseOption, numProfessor)
         professorMenu()
     else:
         print('Please choose a valid course number!')
@@ -156,10 +157,10 @@ def profGiveNewCourse():
 # the user selected to see the course details (option 3 in main menu)
 def seeTheCourses():
     print('Which course to see the details of?')
-    Course.displayCourses(0)
+    Course.displayCourses()
     courseNumber = int(input())
     if 1 <= courseNumber <= 8:
-        Course.displayCourseDetails(0, courseNumber)
+        Course.displayCourseDetails(courseNumber)
         studentOrProfessor()
     else:
         print('please type a valid course number!')

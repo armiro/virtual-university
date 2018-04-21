@@ -14,11 +14,13 @@ class Course:
         self.studentInCourse = studentInCourse
         self.numReg.append(self)
 
-    def displayCourses(self):
+    @staticmethod
+    def displayCourses():
         for k in Course.numReg:
             print('%d) %s' % (k.number, k.name))
 
-    def displayCourseDetails(self, courseNumber):
+    @staticmethod
+    def displayCourseDetails(courseNumber):
         for k in Course.numReg:
             if k.number == courseNumber:
                 print('Name of course is: ' + k.name)
@@ -32,7 +34,8 @@ class Course:
                 else:
                     print('No students attend here!')
 
-    def newStudentGotACourse(self, numStudent, selectedCourseNumber):
+    @staticmethod
+    def newStudentGotACourse(numStudent, selectedCourseNumber):
         wantedCourse = courseList[selectedCourseNumber]
         for k in Course.numReg:
             if wantedCourse == k.name:
@@ -53,14 +56,16 @@ class Professor:
         self.family = family
         self.profCourses = profCourses
 
-    def displayProfessor(self, numProfessor):
+    @staticmethod
+    def displayProfessor(numProfessor):
         for j in Professor.numReg:
             if j.number == numProfessor:
                 print('Welcome Dear Dr.' + j.family)
                 print('You are the instructor of %d course(s) ' % len(j.profCourses))
                 # courseDict = j.profCourses
 
-    def professorCourseGiving(self, newCourseOption, numProfessor):
+    @staticmethod
+    def professorCourseGiving(newCourseOption, numProfessor):
         for k in Course.numReg:
             if k.number == newCourseOption:
                 courseProf = k.profOfCourse
@@ -91,7 +96,8 @@ class Student:
     def displayStudent(self):
         print('You are logged in as ' + self.name + ' ' + self.family)
 
-    def displayStudentCourses(self, numStudent):
+    @staticmethod
+    def displayStudentCourses(numStudent):
         for i in Student.numReg:
             if i.number == numStudent:
                 if i.courses:
@@ -99,7 +105,8 @@ class Student:
                 else:
                     print('You have no courses, yet!')
 
-    def studentCourseAdding(self, selectedCourseNumber, numStudent):
+    @staticmethod
+    def studentCourseAdding(selectedCourseNumber, numStudent):
         wantedCourse = courseList[selectedCourseNumber]
         for i in Student.numReg:
             if i.number == numStudent:
