@@ -1,10 +1,12 @@
 from classes import Student
 from classes import Course
 from classes import Professor
+from classes import *
 
 # the main function
 def main():
     print('Welcome to the virtual university!')
+    # print(courseList)
     studentOrProfessor()
 
 # the main menu
@@ -31,7 +33,8 @@ def studentNumber():
     print('Your student number?')
     global numStudent
     numStudent = int(input())
-    if 9701 <= numStudent <= 9706:
+    lenOfStudents =  9700 + len(Student.numReg) + 1 # student numbers are start from 9701
+    if numStudent in range(9701, lenOfStudents):
         studentAuth()
     else:
         print('please write a valid student number!')
@@ -68,7 +71,7 @@ def getNewCourse():
     print('Which course you wanna attend to?')
     Course.displayCourses()
     selectedCourseNumber = int(input())
-    if 1 <= selectedCourseNumber <= 8:
+    if selectedCourseNumber in range(1, len(Course.numReg)+1):
         Student.studentCourseAdding(selectedCourseNumber, numStudent)
         Course.newStudentGotACourse(numStudent, selectedCourseNumber)
         studentMenu()
@@ -81,7 +84,7 @@ def professorID():
     print('Your ID?')
     global numProfessor
     numProfessor = int(input())
-    if 1 <= numProfessor <= 4:
+    if numProfessor in range(1, len(Professor.numReg)+1):
         professorAuth()
     else:
         print('Please type a valid professor ID!')
@@ -147,7 +150,7 @@ def profGiveNewCourse():
     print('Which course you wanna give?')
     Course.displayCourses()
     newCourseOption = int(input())
-    if 1<= newCourseOption <= 8:
+    if newCourseOption in range(1, len(Course.numReg)+1):
         Professor.professorCourseGiving(newCourseOption, numProfessor)
         professorMenu()
     else:
@@ -159,7 +162,7 @@ def seeTheCourses():
     print('Which course to see the details of?')
     Course.displayCourses()
     courseNumber = int(input())
-    if 1 <= courseNumber <= 8:
+    if courseNumber in range(1, len(Course.numReg)+1):
         Course.displayCourseDetails(courseNumber)
         studentOrProfessor()
     else:

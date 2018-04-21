@@ -1,5 +1,7 @@
-courseList = {1: 'math', 2: 'data analyzing', 3: 'physics', 4: 'dynamic',
-              5: 'history', 6: 'literature', 7: 'chemistry', 8: 'statistics'}
+# courseList = {1: 'math', 2: 'data analyzing', 3: 'physics', 4: 'dynamic',
+#               5: 'history', 6: 'literature', 7: 'chemistry', 8: 'statistics'}
+
+
 
 class Course:
     """common base class for all courses"""
@@ -36,7 +38,7 @@ class Course:
 
     @staticmethod
     def newStudentGotACourse(numStudent, selectedCourseNumber):
-        wantedCourse = courseList[selectedCourseNumber]
+        wantedCourse = courseList[selectedCourseNumber-1]
         for k in Course.numReg:
             if wantedCourse == k.name:
                 for i in Student.numReg:
@@ -78,7 +80,7 @@ class Professor:
                         if j.number == numProfessor:
                             j.profCourses.append(k.name)
                             k.profOfCourse = j.family
-            print('You are now the instructor of %s!' % courseList[newCourseOption])
+            print('You are now the instructor of %s!' % courseList[newCourseOption-1])
 
 class Student:
     """Common base class for all students"""
@@ -107,7 +109,7 @@ class Student:
 
     @staticmethod
     def studentCourseAdding(selectedCourseNumber, numStudent):
-        wantedCourse = courseList[selectedCourseNumber]
+        wantedCourse = courseList[selectedCourseNumber-1]
         for i in Student.numReg:
             if i.number == numStudent:
                 i.courses.append(wantedCourse)
@@ -127,6 +129,9 @@ history = Course(5, 'history')
 literature = Course(6, 'literature')
 chemistry = Course(7, 'chemistry')
 statistics = Course(8, 'statistics')
+logic = Course(9, 'logic')
+
+courseList = [k.name for k in Course.numReg]
 
 student1 = Student(9701, 'amir', 'ahmadi')
 student2 = Student(9702, 'sina', 'mohammadi')
