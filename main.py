@@ -41,7 +41,7 @@ def studentNumber():
 def studentAuth():
     for i in Student.numReg:
         if i.number == numStudent:
-            Student.displayStudent(i)
+            i.displayStudent()
     studentMenu()
 
 # student logged in, now see the menu: see/get courses or logout
@@ -61,21 +61,21 @@ def studentMenu():
 # the student can see the courses he has
 def seeStudentCourses():
     for i in Student.numReg:
-        Student.displayStudentCourses(i, numStudent)
+        i.displayStudentCourses(numStudent)
     studentMenu()
 
 # the student can choose a new course to attend
 def getNewCourse():
     print('Which course you wanna attend to?')
     for k in Course.numReg:
-        Course.displayCourses(k)
+        k.displayCourses()
     selectedCourseNumber = int(input())
     if selectedCourseNumber in range(1, len(Course.numReg)+1):
         wantedCourse = courseList[selectedCourseNumber - 1]
         for i in Student.numReg:
-            Student.studentCourseAdding(i, wantedCourse, numStudent)
+            i.studentCourseAdding(wantedCourse, numStudent)
         for k in Course.numReg:
-            Course.newStudentGotACourse(k, numStudent, wantedCourse)
+            k.newStudentGotACourse(numStudent, wantedCourse)
         studentMenu()
     else:
         print('Please choose a valid number!')
@@ -95,7 +95,7 @@ def professorID():
 # the professor ID is valid, now display his family
 def professorAuth():
     for j in Professor.numReg:
-        Professor.displayProfessor(j, numProfessor)
+        j.displayProfessor(numProfessor)
     professorMenu()
 
 # the professor logged in, now menu: see attending students, give a new course or logout
@@ -152,7 +152,7 @@ def whichCourseToSee():
 def profGiveNewCourse():
     print('Which course you wanna give?')
     for k in Course.numReg:
-        Course.displayCourses(k)
+        k.displayCourses()
     newCourseOption = int(input())
     if newCourseOption in range(1, len(Course.numReg)+1):
         Professor.professorCourseGiving(newCourseOption, numProfessor)
@@ -165,11 +165,11 @@ def profGiveNewCourse():
 def seeTheCourses():
     print('Which course to see the details of?')
     for k in Course.numReg:
-        Course.displayCourses(k)
+        k.displayCourses()
     courseNumber = int(input())
     if courseNumber in range(1, len(Course.numReg)+1):
         for k in Course.numReg:
-            Course.displayCourseDetails(k, courseNumber)
+            k.displayCourseDetails(courseNumber)
         studentOrProfessor()
     else:
         print('please type a valid course number!')
